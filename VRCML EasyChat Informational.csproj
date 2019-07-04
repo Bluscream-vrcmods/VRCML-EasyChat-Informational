@@ -48,6 +48,7 @@
     </Reference>
     <Reference Include="VRCCore-Standalone">
       <HintPath>G:\Steam\steamapps\common\VRChat\VRChat_Data\Managed\VRCCore-Standalone.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -57,7 +58,7 @@
     <Compile Include="Utils\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EasyChat\VRCML EasyChat.csproj">
+    <ProjectReference Include="..\VRCML EasyChat\VRCML EasyChat.csproj">
       <Project>{79ba8cce-aa7a-4a26-b829-2c9fa07d2492}</Project>
       <Name>VRCML EasyChat</Name>
       <Private>False</Private>

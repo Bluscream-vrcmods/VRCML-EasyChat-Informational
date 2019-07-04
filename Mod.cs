@@ -13,8 +13,10 @@ namespace Mod
     [VRCModInfo("EasyChat Informational", "1.0", "Bluscream")]
     public class Mod : VRCMod
     {
+        private static VRCModInfoAttribute ModInfo;
         // EasyChat.EasyChat easyChat;
         void OnApplicationStart() {
+            ModInfo = Attribute.GetCustomAttribute(typeof(Mod), typeof(VRCModInfoAttribute)) as VRCModInfoAttribute;
             Utils.Log("OnApplicationStart (Registering for commands)");
             if (!ModManager.Mods.Any(m => m.Name == "EasyChat")) {
                 VRCUiPopupManagerUtils.ShowPopup("EasyChat not found", "The Mod EasyChat is required for this mod to work, please install it now or click ignore to continue without this mod",
@@ -31,10 +33,11 @@ namespace Mod
         }
         void OnLevelWasLoaded(int level) {
             Utils.Log("OnLevelWasLoaded", level);
-            // EasyChat.EasyChat.HandleMessage(new ChatMessage("test"));
+            EasyChat.EasyChat.HandleMessage(new ChatMessage("OnLevelWasLoaded", sender: ModInfo));
         }
         void OnLevelWasInitialized(int level) {
             Utils.Log("OnLevelWasInitialized", level);
+            EasyChat.EasyChat.HandleMessage(new ChatMessage("OnLevelWasInitialized", sender: ModInfo));
         }
 
         private void OnCommand(ChatCommand command)
@@ -45,13 +48,13 @@ namespace Mod
                     if (APIUser.CurrentUser is null) {
                         answer = new ChatMessage("Not logged in!", sender: "User Information", sanitize: true);
                         answer.Color = Color.red;
-                    } else answer = new ChatMessage(APIUser.CurrentUser.displayName, sender: "User Information", sanitize: true);
+                    } else { answer = new ChatMessage(APIUser.CurrentUser.displayName, sender: "User Information", sanitize: true); }
                     break;
                 default:
                     return;
             }
 
-            // easyChat.HandleMessage(answer);
+            EasyChat.EasyChat.HandleMessage(answer);
         }
         void OnApplicationQuit() {
             Utils.Log("OnApplicationQuit");
